@@ -17,6 +17,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("error while connecting to service: %v\n", err)
 	}
+	defer func() {
+		err = connection.Close()
+		if err != nil {
+			log.Printf("error while closing connection: %v\n", err)
+		}
+	}()
 
 	client := protocol.NewClientServiceClient(connection)
 
